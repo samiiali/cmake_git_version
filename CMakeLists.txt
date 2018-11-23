@@ -44,9 +44,6 @@ configure_file (
 include_directories (${CMAKE_BINARY_DIR}/cmake/include)
 include_directories (${CMAKE_SOURCE_DIR}/include)
 
-add_custom_target (do_always ALL COMMAND ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}
-                   COMMENT "Running cmake prior to make.")
-
 if (MSVC)
     add_compile_options(/W4)
 elseif (UNIX)
@@ -55,3 +52,7 @@ endif()
 
 add_executable(${PROJECT_NAME} "main.cpp;fruit_factory.cpp")
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
+
+# We add the following line to always run cmake once, prior to make
+add_custom_target (do_always ALL COMMAND ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}
+                   COMMENT "Running cmake prior to make.")
