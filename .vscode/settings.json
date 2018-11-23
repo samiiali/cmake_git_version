@@ -1,0 +1,23 @@
+{
+    "clang-format.executable": "clang-format",
+    "editor.fontFamily": "Monaco",
+    "editor.fontSize": 13,
+    "C_Cpp.formatting": "Disabled",
+    "clang-format.style": "LLVM",
+    "cmake.buildDirectory": "${workspaceRoot}/../build",
+    "C_Cpp.default.configurationProvider": "vector-of-bool.cmake-tools",
+    "cmake.configureOnOpen": true,
+    "files.associations": {
+        "memory": "cpp",
+        "__config": "cpp",
+        "__nullptr": "cpp",
+        "cstddef": "cpp",
+        "exception": "cpp",
+        "initializer_list": "cpp",
+        "stdexcept": "cpp",
+        "type_traits": "cpp",
+        "typeinfo": "cpp",
+        "algorithm": "cpp",
+        "functional": "cpp"
+    }
+}
