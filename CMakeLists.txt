@@ -17,15 +17,14 @@ configure_file (
   "${CMAKE_MODULE_PATH}/version.h.in"
   "${CMAKE_BINARY_DIR}/cmake/include/version.h"
 )
- include_directories (${CMAKE_BINARY_DIR}/cmake/include)
+
+include_directories (${CMAKE_BINARY_DIR}/cmake/include)
 
 if (MSVC)
     add_compile_options(/W4)
 elseif (UNIX)
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
-
-add_executable(${PROJECT_NAME} "main.cpp;fruit_factory.cpp")
 
 # target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
 
@@ -38,23 +37,17 @@ add_executable(${PROJECT_NAME} "main.cpp;fruit_factory.cpp")
 
 if (${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
     message(STATUS "Prodcusing profiling and coverage info.")
-    set_target_properties(
-        ${PROJECT_NAME}
-        PROPERTIES
-        COMPILE_FLAGS "${CMAKE_CXX_FLAGS} -g --coverage"
-        LINK_FLAGS "--coverage"
-        )
+    add_compile_options(-g --coverage)
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_C_FLAGS} --coverage")
 elseif (${CMAKE_CXX_COMPILER_ID} MATCHES GNU)
     message(STATUS "Prodcusing profiling and coverage info.")
-    set_target_properties(
-        ${PROJECT_NAME}
-        PROPERTIES
-        COMPILE_FLAGS "${CMAKE_CXX_FLAGS} -g -fprofile-arcs -ftest-coverage"
-        LINK_FLAGS "--coverage"
-        )
+    add_compile_options(-g -fprofile-arcs -ftest-coverage)
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_C_FLAGS} --coverage")
 endif ()
 
 enable_testing()
+
+add_executable(${PROJECT_NAME} "main.cpp;fruit_factory.cpp")
 add_test(test0 ${PROJECT_NAME})
 
 add_executable(test1_exec "wrong_init1.cpp;fruit_factory.cpp")
