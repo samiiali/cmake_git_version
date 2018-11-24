@@ -12,4 +12,4 @@ public:
   virtual ~apple_t() {}
 };
 
-#endif
+#endif // apple_header

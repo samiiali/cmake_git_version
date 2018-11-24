@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.2)
 project(auto_mapped)
 
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 include(git_ver)
 git_ver(GIT_TAG GIT_BRANCH GIT_COMMIT_HASH)
 
@@ -23,7 +26,8 @@ elseif (UNIX)
 endif()
 
 add_executable(${PROJECT_NAME} "main.cpp;fruit_factory.cpp")
-target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
+
+# target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
 
 # We add the following line to always run cmake once, prior to make
 # add_custom_target (
@@ -51,4 +55,7 @@ elseif (${CMAKE_CXX_COMPILER_ID} MATCHES GNU)
 endif ()
 
 enable_testing()
-add_test(test1 ${PROJECT_NAME})
+add_test(test0 ${PROJECT_NAME})
+
+add_executable(test1_exec "wrong_init1.cpp;fruit_factory.cpp")
+add_test(test1 test1_exec)
