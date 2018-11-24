@@ -15,6 +15,7 @@ script:
   - CC=/usr/bin/gcc-7
   - cmake .
   - cmake --build . --
+  - ctest
 
 after_success:
     # Creating report
