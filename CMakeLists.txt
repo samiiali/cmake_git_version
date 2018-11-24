@@ -26,5 +26,29 @@ add_executable(${PROJECT_NAME} "main.cpp;fruit_factory.cpp")
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
 
 # We add the following line to always run cmake once, prior to make
-add_custom_target (do_always ALL COMMAND ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}
-                   COMMENT "Running cmake prior to make.")
+# add_custom_target (
+#   do_always ALL 
+#   COMMAND ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}
+#   COMMENT "Running cmake prior to make."
+#   )
+
+if (${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
+    message(STATUS "Prodcusing profiling and coverage info.")
+    set_target_properties(
+        ${PROJECT_NAME}
+        PROPERTIES
+        COMPILE_FLAGS "${CMAKE_CXX_FLAGS} -g --coverage"
+        LINK_FLAGS "--coverage"
+        )
+elseif (${CMAKE_CXX_COMPILER_ID} MATCHES GNU)
+    message(STATUS "Prodcusing profiling and coverage info.")
+    set_target_properties(
+        ${PROJECT_NAME}
+        PROPERTIES
+        COMPILE_FLAGS "${CMAKE_CXX_FLAGS} -g -fprofile-arcs -ftest-coverage"
+        LINK_FLAGS "-fprofile-arcs -ftest-coverage"
+        )
+endif ()
+
+enable_testing()
+add_test(test1 ${PROJECT_NAME})
