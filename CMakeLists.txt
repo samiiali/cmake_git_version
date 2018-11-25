@@ -12,7 +12,6 @@ message ("++ Git current tag: ${GIT_TAG}")
 message ("++ Git current branch: ${GIT_BRANCH}")
 message ("++ Git commit hash: ${GIT_COMMIT_HASH}")
  
-#message (STATUS "Generating version.h")
 configure_file (
   "${CMAKE_MODULE_PATH}/version.h.in"
   "${CMAKE_BINARY_DIR}/cmake/include/version.h"
@@ -25,15 +24,6 @@ if (MSVC)
 elseif (UNIX)
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
-
-# target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
-
-# We add the following line to always run cmake once, prior to make
-# add_custom_target (
-#   do_always ALL 
-#   COMMAND ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}
-#   COMMENT "Running cmake prior to make."
-#   )
 
 if (${CMAKE_CXX_COMPILER_ID} MATCHES Clang)
     message(STATUS "Prodcusing profiling and coverage info.")
@@ -52,3 +42,8 @@ add_test(test0 ${PROJECT_NAME})
 
 add_executable(test1_exec "wrong_init1.cpp;fruit_factory.cpp")
 add_test(test1 test1_exec)
+set_property(
+    TEST test1
+    PROPERTY PASS_REGULAR_EXPRESSION
+    " bad initializtion !"
+    )
